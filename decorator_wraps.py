@@ -1,5 +1,5 @@
 import logging as logger
-import functools
+from functools import wraps
 
 """
 functools를 import 안하면 wrapped가 정의되어있지 않다고 쓸 수 없다.
@@ -9,8 +9,11 @@ functools를 import 안하면 wrapped가 정의되어있지 않다고 쓸 수 �
 
 
 def trace_decorator(function):
-    @functools.wraps(function)
+    @wraps(function)
     def wrapped(*args, **kwargs):
+        """
+        decorator docstring
+        """
         logger.info("%s 실행", function.__qualname__)
         return function(*args, **kwargs)
 
@@ -25,4 +28,6 @@ def process_account(account_id):
     logger.info("%s 계정 처리", account_id)
 
 
-print(process_account.__qualname__)
+if __name__ == "__main__":
+    print(process_account.__qualname__)
+    # print(help(process_account))
